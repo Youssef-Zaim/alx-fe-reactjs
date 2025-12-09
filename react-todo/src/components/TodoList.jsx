@@ -47,7 +47,7 @@ export default function TodoList({ initialTodos = [] }) {
   return (
     <div>
       <form onSubmit={addTodo}>
-        {/* NOTE: aria-label must match test: "todo-input" */}
+        {/* IMPORTANT: aria-label must be "todo-input" exactly (used by tests) */}
         <input
           aria-label="todo-input"
           placeholder="Add todo"
