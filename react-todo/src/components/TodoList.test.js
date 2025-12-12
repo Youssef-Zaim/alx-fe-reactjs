@@ -1,4 +1,3 @@
-// src/components/TodoList.test.js
 import { render, screen } from "@testing-library/react";
 import TodoList from "./TodoList";
 
@@ -9,4 +8,3 @@ test("renders all todo items", () => {
   const listItems = screen.getAllByTestId("todo-item");
   expect(listItems).toHaveLength(3);
 });
-
