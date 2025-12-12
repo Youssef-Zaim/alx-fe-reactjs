@@ -2,11 +2,14 @@
 import React from "react";
 import TodoList from "./components/TodoList";
 
-export default function App() {
+function App() {
+  const items = ["Task 1", "Task 2", "Task 3"];
   return (
     <div>
       <h1>Todo App</h1>
-      <TodoList />
+      <TodoList items={items} />
     </div>
   );
 }
+
+export default App;
