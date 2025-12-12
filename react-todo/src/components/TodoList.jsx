@@ -1,15 +1,47 @@
-// src/components/TodoList.jsx
-import React from "react";
+import React, { useState } from "react";
+import AddTodoForm from "./AddTodoForm";
 import TodoItem from "./TodoItem";
 
-function TodoList({ items = [] }) {
+export default function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: "1", text: "Learn React", done: false },
+    { id: "2", text: "Learn Testing", done: false }
+  ]);
+
+  const addTodo = (text) => {
+    const newTodo = {
+      id: Date.now().toString(),
+      text,
+      done: false,
+    };
+    setTodos((prev) => [...prev, newTodo]);
+  };
+
+  const toggleTodo = (id) => {
+    setTodos((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, done: !t.done } : t
+      )
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  };
+
   return (
-    <ul data-testid="todo-list">
-      {items.map((task, index) => (
-        <TodoItem key={index} item={task} />
-      ))}
-    </ul>
+    <div>
+      <AddTodoForm onAdd={addTodo} />
+      <ul data-testid="todo-list">
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={toggleTodo}
+            onDelete={deleteTodo}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
-
-export default TodoList;
