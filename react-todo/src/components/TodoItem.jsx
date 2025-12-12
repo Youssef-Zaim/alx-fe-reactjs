@@ -1,8 +1,22 @@
-// src/components/TodoItem.jsx
 import React from "react";
 
-function TodoItem({ item }) {
-  return <li data-testid="todo-item">{item}</li>;
+export default function TodoItem({ todo, onToggle, onDelete }) {
+  return (
+    <li
+      data-testid="todo-item"
+      style={{ textDecoration: todo.done ? "line-through" : "none" }}
+      onClick={() => onToggle(todo.id)}
+    >
+      {todo.text}
+      <button
+        data-testid={`delete-${todo.id}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(todo.id);
+        }}
+      >
+        Delete
+      </button>
+    </li>
+  );
 }
-
-export default TodoItem;
