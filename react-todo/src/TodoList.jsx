@@ -1,6 +1,4 @@
-// ALX FINAL FIX
 import React, { useState } from "react";
-import TodoItem from "./TodoItem";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
@@ -11,20 +9,26 @@ export default function TodoList() {
   const addTodo = () => {
     setTodos([
       ...todos,
-      { id: Date.now(), text: "New Todo", completed: false },
+      {
+        id: Date.now(),
+        text: "New Todo",
+        completed: false,
+      },
     ]);
   };
 
   const toggleTodo = (id) => {
     setTodos(
-      todos.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, completed: !todo.completed }
+          : todo
       )
     );
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((t) => t.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -32,12 +36,18 @@ export default function TodoList() {
       <button onClick={addTodo}>Add</button>
       <ul>
         {todos.map((todo) => (
-          <TodoItem
+          <li
             key={todo.id}
-            todo={todo}
-            onToggle={toggleTodo}
-            onDelete={deleteTodo}
-          />
+            data-testid="todo-item"
+            onClick={() => toggleTodo(todo.id)}
+            style={{
+              textDecoration: todo.completed ? "line-through" : "none",
+              cursor: "pointer",
+            }}
+          >
+            {todo.text}
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
