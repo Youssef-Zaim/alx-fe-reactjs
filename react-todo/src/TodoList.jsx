@@ -2,15 +2,19 @@ import React, { useState } from "react";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
-    { id: 1, text: "Task 1", completed: false },
-    { id: 2, text: "Task 2", completed: false },
+    { id: 1, text: "Learn React", completed: false },
   ]);
+  const [text, setText] = useState("");
 
-  const addTodo = () => {
+  const addTodo = (e) => {
+    e.preventDefault();
+    if (!text) return;
+
     setTodos([
       ...todos,
-      { id: Date.now(), text: "New Todo", completed: false },
+      { id: Date.now(), text, completed: false },
     ]);
+    setText("");
   };
 
   const toggleTodo = (id) => {
@@ -29,7 +33,15 @@ export default function TodoList() {
 
   return (
     <div>
-      <button onClick={addTodo}>Add</button>
+      <form onSubmit={addTodo}>
+        <input
+          aria-label="todo-input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+
       <ul>
         {todos.map((todo) => (
           <li
@@ -38,6 +50,7 @@ export default function TodoList() {
             onClick={() => toggleTodo(todo.id)}
             style={{
               textDecoration: todo.completed ? "line-through" : "none",
+              cursor: "pointer",
             }}
           >
             {todo.text}
